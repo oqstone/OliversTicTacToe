@@ -1,2 +1,0 @@
-# OliversTicTacToe
-Created with CodeSandbox

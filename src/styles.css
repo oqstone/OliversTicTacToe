@@ -1,0 +1,34 @@
+body {
+  font-family: sans-serif;
+  background-color: #ebfddcd8;
+}
+
+h3 {
+  color: #e41b1bd8;
+}
+p {
+  font-size: 10pt;
+}
+
+table,
+tr,
+td {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  height: 200px;
+  width: 200px;
+}
+tr {
+  height: 40px;
+}
+td {
+  width: 40px;
+  text-align: center;
+}
+
+.gameBoard td:hover {
+  background-color: #e26161d8;
+}
