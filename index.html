@@ -7,20 +7,29 @@
 </head>
 
 <body>
-	<H3>Oliver's Tic Tac Toe</H3>
-	<p id="ingress">X starts. The first complete row, column or diagonal wins!
+	<H2>Oliver's Tic Tac Toe</H2>
+	<p id="ingress">X starts. The first complete row, column or diagonal wins!</p>
+	
+	<div class = "radioContainer">
+	<p class="radioDiv">Active turn:</p>
+		<div class = "radioDiv">
+			<input type="radio" id="radioX" name="mark" value="X" disabled = "true" >
+			<label for="radioX">X</label>
+		</div>
+		<div class = "radioDiv">
+			<input type="radio" id="radioO" name="mark" value="O" disabled = "true" >
+			<label for="radioO">O</label>
+		</div>
+	</div>
+	
+	<div class="fatherDiv">
+		<div class="gameBoardContainer">
+		<table id="board" class="gameBoard"></table>
+		<p><button id="newGame" value="Refresh Page" OnClick="window.location.reload();">Empty</button></p>
+		</div>
+	</div>
 
-	<table>
-		<tr>
-			<td><table id="board" class="gameBoard"></table></td><td><input type="radio" name="mark" value="X" disabled = "true" id="radioX">X</br>
-			<input type="radio" name="mark" value="O" disabled = "true" id="radioO">O</td>
-		</tr>
-	</table>
-
-	<button id="newGame" value="Refresh Page" OnClick="window.location.reload();">Empty</button>
-
-	<script src="src/index.js">
-	</script>
+	<script src="src/index.js"></script>
 </body>
 
 </html>
