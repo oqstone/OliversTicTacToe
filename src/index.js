@@ -10,6 +10,7 @@ function main() {
   board = createBoard(board);
   mark = changeMark(mark);
   checkForClick(board, mark);
+  return;
 }
 
 // Creating game board
@@ -27,29 +28,32 @@ function createBoard(board) {
 
 // Checking for clicks
 function checkForClick(board, mark) {
-  if (board != null) {
+  let winner = null;
+  if (board != null && winner === null) {
     for (let i = 0; i < board.rows.length; i++) {
       for (let j = 0; j < board.rows[i].cells.length; j++) {
         board.rows[i].cells[j].addEventListener("click", function() {
-          mark = addMark(this, board, mark);
+          [mark, winner] = addMark(this, board, mark, winner);
         });
       }
     }
+  } else {
+    return;
   }
 }
 
 // Adding a mark
-function addMark(cell, board, mark) {
+function addMark(cell, board, mark, winner) {
   if (cell.innerHTML !== `X` && cell.innerHTML !== `O`) {
     cell.innerHTML = mark;
-    checkWinner(board, mark);
+    winner = checkWinner(board, mark, winner);
     mark = changeMark(mark);
   } else if (cell.innerHTML === mark) {
     alert("You already have a mark on this cell. Try another one!");
   } else {
     alert("Another player has a mark on this cell. Try another one!");
   }
-  return mark;
+  return [mark, winner];
 }
 
 // Changing a mark
@@ -67,14 +71,13 @@ function changeMark(mark) {
 }
 
 // Checking for winners
-function checkWinner(board, mark) {
+function checkWinner(board, mark, winner) {
   let previous = board.rows[0].cells[0].innerHTML;
   let current = board.rows[0].cells[0].innerHTML;
   let r = 0;
   let c = 0;
   let d = 0;
   let size;
-  let winner;
 
   let rows = board.rows.length;
   let columns = board.rows[0].cells.length;
@@ -141,7 +144,7 @@ function checkWinner(board, mark) {
     current = board.rows[d].cells[size - 1 - d].innerHTML;
     if (current === previous && current !== ``) {
       if (d === size - 1) {
-        winner = current;
+        winner = previous;
         endOfTheGame(winner);
       }
       previous = current;
@@ -150,12 +153,35 @@ function checkWinner(board, mark) {
       break;
     }
   }
+
+  return winner;
 }
 
+// Ending the game...
 function endOfTheGame(winner) {
-  console.log(winner, "won!");
+  let n = `1`;
+  //let gameBoard = document.querySelectorAll(".gameBoard td:hover");
+
+  if (winner === `O`) {
+    n = 2;
+  }
+
+  // Reject adding new marks
+  window.addEventListener(
+    "click",
+    function(event) {
+      event.stopPropagation();
+    },
+    true
+  );
+
+  //gameBoard.style.backgroundColor = "#ebfddcd8";
+
+  console.log("Player", winner, "won!");
   console.log("End of The Game");
-  alert("End of The Game");
+
+  alert("Player " + n + " won!");
+
   let button = document.getElementById("newGame");
   button.innerHTML = `New Game`;
 }
