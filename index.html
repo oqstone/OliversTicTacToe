@@ -7,11 +7,13 @@
 </head>
 
 <body>
-	<H2>Oliver's Tic Tac Toe</H2>
-	<p id="ingress">X starts. The first complete row, column or diagonal wins!</p>
+	<div>
+		<H2>Oliver's Tic Tac Toe</H2>
+		<p id="ingress">X starts. The first complete row, column or diagonal wins!</p>
+	</div>
 	
 	<div class = "radioContainer">
-	<p class="radioDiv">Active turn:</p>
+		<p class="radioDiv">Active turn:</p>
 		<div class = "radioDiv">
 			<input type="radio" id="radioX" name="mark" value="X" disabled = "true" >
 			<label for="radioX">X</label>
@@ -21,14 +23,16 @@
 			<label for="radioO">O</label>
 		</div>
 	</div>
-	
-	<div class="fatherDiv">
-		<div class="gameBoardContainer">
-		<table id="board" class="gameBoard"></table>
-		<p><button id="newGame" value="Refresh Page" OnClick="window.location.reload();">Empty</button></p>
-		</div>
+	<div id = "bar" class = "progressBar">
+		<p>tekstiä</p>
 	</div>
-
+	
+	<div class="gameBoardContainer">
+		<table id="board" class="gameBoard"></table>
+	</div>
+	<div class="buttonContainer">
+		<p><button id="newGame" value="Refresh Page">Empty</button></p>
+	</div>
 	<script src="src/index.js"></script>
 </body>
 

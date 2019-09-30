@@ -5,11 +5,12 @@ main();
 // Main
 function main() {
   let board = document.getElementById("board");
+  let button = document.getElementById("newGame");
   let mark = ``;
 
   board = createBoard(board);
   mark = changeMark(mark);
-  checkForClick(board, mark);
+  checkForClick(board, mark, button);
   return;
 }
 
@@ -27,9 +28,12 @@ function createBoard(board) {
 }
 
 // Checking for clicks
-function checkForClick(board, mark) {
+function checkForClick(board, mark, button) {
   let winner = null;
-  if (board != null && winner === null) {
+  button.addEventListener("click", function() {
+    window.location.reload();
+  });
+  if (board != null) {
     for (let i = 0; i < board.rows.length; i++) {
       for (let j = 0; j < board.rows[i].cells.length; j++) {
         board.rows[i].cells[j].addEventListener("click", function() {
@@ -44,8 +48,14 @@ function checkForClick(board, mark) {
 
 // Adding a mark
 function addMark(cell, board, mark, winner) {
+  progressBar();
   if (cell.innerHTML !== `X` && cell.innerHTML !== `O`) {
     cell.innerHTML = mark;
+    if (mark === `X`) {
+      cell.classList.add("x-style");
+    } else {
+      cell.classList.add("o-style");
+    }
     winner = checkWinner(board, mark, winner);
     mark = changeMark(mark);
   } else if (cell.innerHTML === mark) {
@@ -68,6 +78,21 @@ function changeMark(mark) {
     console.log("Active turn: X");
   }
   return mark;
+}
+
+// Creating a progress bar
+function progressBar() {
+  let bar = document.getElementById("bar");
+  let width = 1;
+  let id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++;
+      bar.style.width = width + `%`;
+    }
+  }
 }
 
 // Checking for winners
@@ -160,28 +185,13 @@ function checkWinner(board, mark, winner) {
 // Ending the game...
 function endOfTheGame(winner) {
   let n = `1`;
-  //let gameBoard = document.querySelectorAll(".gameBoard td:hover");
 
   if (winner === `O`) {
     n = 2;
   }
 
-  // Reject adding new marks
-  window.addEventListener(
-    "click",
-    function(event) {
-      event.stopPropagation();
-    },
-    true
-  );
-
-  //gameBoard.style.backgroundColor = "#ebfddcd8";
-
   console.log("Player", winner, "won!");
   console.log("End of The Game");
 
   alert("Player " + n + " won!");
-
-  let button = document.getElementById("newGame");
-  button.innerHTML = `New Game`;
 }
