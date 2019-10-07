@@ -18,8 +18,8 @@ td {
 table {
   border-collapse: collapse;
   padding-top: 100%; /* 1:1 Aspect Ratio */
-  height: 300px;
-  width: 300px;
+  /*height: 300px;
+  width: 300px;*/
 }
 tr {
   height: 60px;
