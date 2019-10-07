@@ -25,14 +25,15 @@ tr {
   height: 60px;
 }
 td {
+  height: 59px;
   width: 60px;
   text-align: center;
 }
 .x-style {
-  background-color: rgb(124, 252, 0);
+  background-color: rgb(250, 128, 114);
 }
 .o-style {
-  background-color: rgb(250, 128, 114);
+  background-color: rgb(124, 252, 0);
 }
 button {
   width: 40%;
