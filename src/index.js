@@ -42,6 +42,7 @@ function createBoard(board) {
 function checkForClick(board) {
   let clickHandler = function() {
     addMark(this, board);
+    changeMark();
   };
 
   if (board !== undefined && board !== null) {
@@ -61,7 +62,7 @@ function addMark(cell, board) {
   if (paused === 1) {
     return; // Returning if game is on pause
   }
-  paused = 1;
+  paused = 0;
 
   function continuePlaying() {
     changeMark();
