@@ -17,7 +17,6 @@ td {
 }
 table {
   border-collapse: collapse;
-  width: 100%;
   padding-top: 100%; /* 1:1 Aspect Ratio */
   height: 70vh;
   width: 70vh;
@@ -46,10 +45,14 @@ button {
   font-size: 12pt;
   font-weight: bold;
 }
-.progressBar {
-  display: inline-block;
-  height: 24px;
-  width: 0;
+#progress {
+  width: 70vh;
+  background-color: #ddd;
+}
+#bar {
+  width: 1%;
+  height: 30px;
+  background-color: #4caf50;
 }
 button:hover {
   background-color: #e26161d8;

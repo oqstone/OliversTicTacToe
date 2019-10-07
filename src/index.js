@@ -1,20 +1,31 @@
 import "./styles.css";
 
+let paused = 0; // 1 -> game is paused, -> 0 playing...
+let activePlayer = null;
+changeMark();
+
 main();
 
 // Main
 function main() {
+  // Initializing
   let board = document.getElementById("board");
-  let button = document.getElementById("newGame");
-  let mark = ``;
+  let newGameBtn = document.getElementById("newGame");
+  let reload = function() {
+    window.location.reload(); // Reload the game when the button is pressed
+  };
 
   board = createBoard(board);
-  mark = changeMark(mark);
-  checkForClick(board, mark, button);
+  newGameBtn.addEventListener("click", reload); // Activating the reload button
+
+  // Main "loop"
+  checkForClick(board); // Activating the gameboard
+
+  // End of The Game //
   return;
 }
 
-// Creating game board
+// Creating the game board
 function createBoard(board) {
   board.innerHTML = ``;
   for (let m = 0; m <= 4; m++) {
@@ -28,81 +39,103 @@ function createBoard(board) {
 }
 
 // Checking for clicks
-function checkForClick(board, mark, button) {
-  let winner = null;
-  button.addEventListener("click", function() {
-    window.location.reload();
-  });
-  if (board != null) {
+function checkForClick(board) {
+  let clickHandler = function() {
+    addMark(this, board);
+  };
+
+  if (board !== undefined && board !== null) {
     for (let i = 0; i < board.rows.length; i++) {
       for (let j = 0; j < board.rows[i].cells.length; j++) {
-        board.rows[i].cells[j].addEventListener("click", function() {
-          [mark, winner] = addMark(this, board, mark, winner);
-        });
+        board.rows[i].cells[j].addEventListener("click", clickHandler);
       }
     }
   } else {
+    alert("Unexpected Error Occurred!");
     return;
   }
 }
 
-// Adding a mark
-function addMark(cell, board, mark, winner) {
-  progressBar();
+// Adding a activePlayer
+function addMark(cell, board) {
+  if (paused === 1) {
+    return; // Returning if game is on pause
+  }
+  paused = 1;
+
+  function continuePlaying() {
+    changeMark();
+    progressBar(continuePlaying);
+    paused = 0;
+
+    return
+  }
+
+  progressBar(continuePlaying);
+
   if (cell.innerHTML !== `X` && cell.innerHTML !== `O`) {
-    cell.innerHTML = mark;
-    if (mark === `X`) {
+    cell.innerHTML = activePlayer;
+    if (activePlayer === `X`) {
       cell.classList.add("x-style");
     } else {
       cell.classList.add("o-style");
     }
-    winner = checkWinner(board, mark, winner);
-    mark = changeMark(mark);
-  } else if (cell.innerHTML === mark) {
+    checkWinner(board);
+  } else if (cell.innerHTML === activePlayer) {
     alert("You already have a mark on this cell. Try another one!");
   } else {
     alert("Another player has a mark on this cell. Try another one!");
   }
-  return [mark, winner];
+  return
 }
 
-// Changing a mark
-function changeMark(mark) {
-  if (mark === `X`) {
-    mark = `O`;
+// Changing the activePlayer
+function changeMark() {
+  if (activePlayer === `X`) {
+    activePlayer = `O`;
     document.getElementById("radioO").checked = true;
     console.log("Active turn: O");
   } else {
-    mark = `X`;
+    activePlayer = `X`;
     document.getElementById("radioX").checked = true;
     console.log("Active turn: X");
   }
-  return mark;
+  return
 }
 
 // Creating a progress bar
-function progressBar() {
+function progressBar(callback) {
   let bar = document.getElementById("bar");
   let width = 1;
-  let id = setInterval(frame, 10);
+  bar.style.width = 0;
+  let id = setInterval(frame, 100);
   function frame() {
     if (width >= 100) {
       clearInterval(id);
+      return;
     } else {
       width++;
       bar.style.width = width + `%`;
     }
   }
+
+  // Waiting for the progress bar...
+  setTimeout(function() {
+     callback();
+  }, 10000);
+
+  return
 }
 
 // Checking for winners
-function checkWinner(board, mark, winner) {
+function checkWinner(board) {
   let previous = board.rows[0].cells[0].innerHTML;
   let current = board.rows[0].cells[0].innerHTML;
   let r = 0;
   let c = 0;
   let d = 0;
   let size;
+  let winner = null;
 
   let rows = board.rows.length;
   let columns = board.rows[0].cells.length;
@@ -178,7 +211,6 @@ function checkWinner(board, mark, winner) {
       break;
     }
   }
-
   return winner;
 }
 
