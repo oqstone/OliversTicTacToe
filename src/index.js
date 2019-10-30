@@ -79,6 +79,7 @@ function addMark(cell, board) {
   } else {
     alert("Another player has a mark on this cell. Try another one!");
   }
+  checkWinner(board);
   return;
 }
 
@@ -132,27 +133,26 @@ function progressBar(callback) {
   return;
 }
 
-/*
 // Checking for winners
 function checkWinner(board) {
-  let previous = board.rows[0].cells[0].innerHTML;
-  let current = board.rows[0].cells[0].innerHTML;
+  let previous = document.getElementById("cell1").innerHTML;
+  let current = document.getElementById("cell1").innerHTML;
   let r = 0;
   let c = 0;
   let d = 0;
-  let size;
   let winner = null;
 
-  let rows = board.rows.length;
-  let columns = board.rows[0].cells.length;
-
   // Check rows
-  for (r = 0; r < rows; r++) {
-    previous = board.rows[r].cells[0].innerHTML;
-    for (c = 0; c < columns; c++) {
-      current = board.rows[r].cells[c].innerHTML;
+  for (r = 1; r <= 25; r = r + 5) {
+    let rs = r;
+    rs = rs.toString();
+    previous = document.getElementById("cell" + rs).innerHTML;
+    for (c = 0; c < 5; c++) {
+      let rcs = r + c;
+      rcs = rcs.toString();
+      current = document.getElementById("cell" + rcs).innerHTML;
       if (current === previous && current !== ``) {
-        if (c === columns - 1) {
+        if (c === 4) {
           winner = current;
           endOfTheGame(winner);
         }
@@ -165,12 +165,16 @@ function checkWinner(board) {
   }
 
   // Check columns
-  for (c = 0; c < columns; c++) {
-    previous = board.rows[0].cells[c].innerHTML;
-    for (r = 0; r < rows; r++) {
-      current = board.rows[r].cells[c].innerHTML;
+  for (r = 1; r <= 5; r++) {
+    let rs = r;
+    rs = rs.toString();
+    previous = document.getElementById("cell" + rs).innerHTML;
+    for (c = 0; c < 25; c = c + 5) {
+      let rcs = r + c;
+      rcs = rcs.toString();
+      current = document.getElementById("cell" + rcs).innerHTML;
       if (current === previous && current !== ``) {
-        if (r === rows - 1) {
+        if (c === 4) {
           winner = current;
           endOfTheGame(winner);
         }
@@ -183,16 +187,13 @@ function checkWinner(board) {
   }
 
   // Check diagonal
-  if (columns === rows) {
-    size = columns;
-  } else {
-    alert("Error! Columns and rows doesn't match!");
-  }
-  previous = board.rows[0].cells[0].innerHTML;
-  for (d = 0; d < size; d++) {
-    current = board.rows[d].cells[d].innerHTML;
+  previous = document.getElementById("cell1").innerHTML;
+  for (d = 1; d <= 25; d = d + 6) {
+    let ds = d;
+    ds = ds.toString();
+    current = document.getElementById("cell" + ds).innerHTML;
     if (current === previous && current !== ``) {
-      if (d === size - 1) {
+      if (d === 25) {
         winner = current;
         endOfTheGame(winner);
       }
@@ -203,12 +204,14 @@ function checkWinner(board) {
     }
   }
 
-  previous = board.rows[0].cells[size - 1].innerHTML;
-  for (d = 0; d < size; d++) {
-    current = board.rows[d].cells[size - 1 - d].innerHTML;
+  previous = document.getElementById("cell1").innerHTML;
+  for (d = 5; d <= 21; d = d + 4) {
+    let ds = d;
+    ds = ds.toString();
+    current = document.getElementById("cell" + ds).innerHTML;
     if (current === previous && current !== ``) {
-      if (d === size - 1) {
-        winner = previous;
+      if (d === 21) {
+        winner = current;
         endOfTheGame(winner);
       }
       previous = current;
@@ -217,8 +220,9 @@ function checkWinner(board) {
       break;
     }
   }
+
   return winner;
-}*/
+}
 
 // Ending the game...
 function endOfTheGame(winner) {

@@ -19,6 +19,9 @@ p {
   right: auto;
   border: 1px solid black;
   text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: large;
 }
 .x-style {
   background-color: rgb(124, 252, 0);
@@ -26,6 +29,11 @@ p {
 .o-style {
   background-color: rgb(250, 128, 114);
 }
+.radios {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
 button {
   width: 40%;
   height: 10%;
@@ -37,6 +45,7 @@ button {
   font-size: 12pt;
   font-weight: bold;
 }
+
 #progress {
   background-color: #ddd;
 }
@@ -44,8 +53,4 @@ button {
   width: 1%;
   height: 30px;
   background-color: #4caf50;
-}
-.radios {
-  font-size: 12pt;
-  font-weight: bold;
 }
