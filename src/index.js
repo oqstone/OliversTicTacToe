@@ -1,6 +1,7 @@
 import "./styles.css";
 
-let paused = 0; // 1 -> game is paused, -> 0 playing...
+let paused = 1; // 1 -> game is paused, -> 0 playing...
+console.log("Pause status:", paused);
 let activePlayer = null;
 changeMark();
 
@@ -27,13 +28,18 @@ function main() {
 
 // Creating the game board
 function createBoard(board) {
-  board.innerHTML = ``;
-  for (let m = 0; m <= 4; m++) {
-    let row = board.insertRow(0);
-    for (let n = 0; n <= 4; n++) {
-      row.insertCell(0);
-    }
+  let row = document.createElement("div");
+  row.className = "row";
+  board.appendChild(row);
+
+  for (let i = 1; i <= 25; i++) {
+    let column = document.createElement("div");
+    column.className = "col custom-col";
+    let is = i;
+    column.id = "cell" + is.toString();
+    row.appendChild(column);
   }
+
   console.log("Game board was created.");
   return board;
 }
@@ -42,18 +48,13 @@ function createBoard(board) {
 function checkForClick(board) {
   let clickHandler = function() {
     addMark(this, board);
-    changeMark();
   };
 
-  if (board !== undefined && board !== null) {
-    for (let i = 0; i < board.rows.length; i++) {
-      for (let j = 0; j < board.rows[i].cells.length; j++) {
-        board.rows[i].cells[j].addEventListener("click", clickHandler);
-      }
-    }
-  } else {
-    alert("Unexpected Error Occurred!");
-    return;
+  for (let i = 1; i < 25; i++) {
+    let is = i;
+    is = is.toString();
+    let cell = document.getElementById("cell" + is);
+    cell.addEventListener("click", clickHandler);
   }
 }
 
@@ -62,17 +63,8 @@ function addMark(cell, board) {
   if (paused === 1) {
     return; // Returning if game is on pause
   }
-  paused = 0;
-
-  function continuePlaying() {
-    changeMark();
-    progressBar(continuePlaying);
-    paused = 0;
-
-    return
-  }
-
-  progressBar(continuePlaying);
+  paused = 1;
+  console.log("Pause status:", paused);
 
   if (cell.innerHTML !== `X` && cell.innerHTML !== `O`) {
     cell.innerHTML = activePlayer;
@@ -81,17 +73,29 @@ function addMark(cell, board) {
     } else {
       cell.classList.add("o-style");
     }
-    checkWinner(board);
+    //checkWinner(board);
   } else if (cell.innerHTML === activePlayer) {
     alert("You already have a mark on this cell. Try another one!");
   } else {
     alert("Another player has a mark on this cell. Try another one!");
   }
-  return
+  return;
 }
 
 // Changing the activePlayer
 function changeMark() {
+  function continuePlaying() {
+    paused = 0;
+    changeMark();
+    console.log("Pause status:", paused);
+
+    return;
+  }
+  progressBar(continuePlaying);
+  if (paused === 1) {
+    return; // Returning if game is on pause
+  }
+
   if (activePlayer === `X`) {
     activePlayer = `O`;
     document.getElementById("radioO").checked = true;
@@ -101,7 +105,7 @@ function changeMark() {
     document.getElementById("radioX").checked = true;
     console.log("Active turn: X");
   }
-  return
+  return;
 }
 
 // Creating a progress bar
@@ -122,12 +126,13 @@ function progressBar(callback) {
 
   // Waiting for the progress bar...
   setTimeout(function() {
-     callback();
+    callback();
   }, 10000);
 
-  return
+  return;
 }
 
+/*
 // Checking for winners
 function checkWinner(board) {
   let previous = board.rows[0].cells[0].innerHTML;
@@ -213,7 +218,7 @@ function checkWinner(board) {
     }
   }
   return winner;
-}
+}*/
 
 // Ending the game...
 function endOfTheGame(winner) {
@@ -225,6 +230,7 @@ function endOfTheGame(winner) {
 
   console.log("Player", winner, "won!");
   console.log("End of The Game");
+  paused = 1;
 
   alert("Player " + n + " won!");
 }

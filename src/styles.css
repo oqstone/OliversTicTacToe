@@ -8,25 +8,16 @@ h3 {
   color: #e41b1bd8;
 }
 p {
-  font-size: 12pt;
+  font-size: medium;
 }
-table,
-tr,
-td {
+
+.custom-col {
+  width: 20%;
+  height: 80px;
+  margin-left: auto;
+  left: auto;
+  right: auto;
   border: 1px solid black;
-}
-table {
-  border-collapse: collapse;
-  padding-top: 100%; /* 1:1 Aspect Ratio */
-  /*height: 300px;
-  width: 300px;*/
-}
-tr {
-  height: 60px;
-}
-td {
-  height: 60px;
-  width: 60px;
   text-align: center;
 }
 .x-style {
@@ -47,7 +38,6 @@ button {
   font-weight: bold;
 }
 #progress {
-  width: 70vh;
   background-color: #ddd;
 }
 #bar {
@@ -55,24 +45,7 @@ button {
   height: 30px;
   background-color: #4caf50;
 }
-button:hover {
-  background-color: #e26161d8;
-  border-radius: 30px;
-}
-.gameBoard td:hover {
-  background-color: #e26161d8;
-}
-.radioDiv {
-  display: inline-block;
+.radios {
   font-size: 12pt;
-  font-weight: bold;
-}
-.gameBoardContainer {
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  margin-top: 3%;
-  font-size: 30px;
   font-weight: bold;
 }
